@@ -1,0 +1,15 @@
+# BYO override: skip the bundled Redis. Note: the bundled `ollama`
+# service is already gated under the `local-models` profile so it does
+# not start unless you pass `--profile local-models`.
+#
+# Set REDIS_URL and OLLAMA_BASE_URL (pointing at your Ollama / OpenAI-
+# compatible endpoint) in .env and start with:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.byo.yml up -d
+
+services:
+  redis:
+    deploy:
+      replicas: 0
+  specter:
+    depends_on: !reset []

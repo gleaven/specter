@@ -1,0 +1,67 @@
+[
+  {
+    "id": "reason-01",
+    "name": "Logic Puzzle",
+    "prompt": "Five houses in a row are painted different colors. Each house is occupied by a person of a different nationality, who drinks a different beverage, smokes a different brand, and keeps a different pet.\n\nClues:\n1. The British person lives in the red house.\n2. The Swedish person keeps dogs.\n3. The Danish person drinks tea.\n4. The green house is immediately to the left of the white house.\n5. The green house owner drinks coffee.\n6. The person who smokes Pall Mall keeps birds.\n7. The owner of the yellow house smokes Dunhill.\n8. The person in the center house drinks milk.\n9. The Norwegian lives in the first house.\n10. The person who smokes Blend lives next to the person with cats.\n11. The person who keeps horses lives next to the Dunhill smoker.\n12. The person who smokes Blue Master drinks beer.\n13. The German smokes Prince.\n14. The Norwegian lives next to the blue house.\n15. The Blend smoker has a neighbor who drinks water.\n\nWho owns the fish?",
+    "expected_answer": "German",
+    "category": "logic"
+  },
+  {
+    "id": "reason-02",
+    "name": "Math Word Problem",
+    "prompt": "A train leaves Station A at 9:00 AM traveling east at 80 km/h. Another train leaves Station B (which is 420 km east of Station A) at 10:00 AM traveling west at 100 km/h. At what time do the two trains meet, and how far from Station A is the meeting point?",
+    "expected_answer": "11:53",
+    "category": "math"
+  },
+  {
+    "id": "reason-03",
+    "name": "Probability",
+    "prompt": "You have a bag with 5 red balls, 3 blue balls, and 2 green balls. You draw 3 balls without replacement. What is the probability that you get exactly one ball of each color? Show your work step by step.",
+    "expected_answer": "1/4",
+    "category": "math"
+  },
+  {
+    "id": "reason-04",
+    "name": "Causal Reasoning",
+    "prompt": "A factory produces widgets. Last month, the defect rate suddenly increased from 2% to 8%. The following changes occurred around the same time:\n1. A new supplier started providing raw materials (Week 1)\n2. The factory hired 15 new workers (Week 2)\n3. The cooling system in Section B had a malfunction repaired (Week 1)\n4. A software update was applied to the quality control cameras (Week 3)\n5. Humidity levels rose due to seasonal changes (gradual)\n\nThe defect data shows: Section A defect rate unchanged at 2%. Section B defect rate went from 2% to 14%. New workers are distributed equally across both sections. The raw material supplier provides to both sections.\n\nWhat is the most likely root cause? Explain your reasoning, addressing why each other factor is less likely.",
+    "category": "reasoning"
+  },
+  {
+    "id": "reason-05",
+    "name": "Game Theory",
+    "prompt": "Two competing companies must decide simultaneously whether to price their product HIGH or LOW. The payoff matrix (Company A, Company B) in millions of dollars is:\n\n                Company B: HIGH    Company B: LOW\nCompany A: HIGH    (10, 10)           (3, 12)\nCompany A: LOW     (12, 3)            (5, 5)\n\n1. What is the Nash equilibrium?\n2. Is this a Prisoner's Dilemma? Why or why not?\n3. If the game is repeated infinitely with discount factor 0.9, can (HIGH, HIGH) be sustained? What strategy would achieve this?",
+    "expected_answer": "LOW, LOW",
+    "category": "reasoning"
+  },
+  {
+    "id": "reason-06",
+    "name": "Fermi Estimation",
+    "prompt": "Estimate the number of piano tuners in Chicago. Walk through your reasoning step by step, stating each assumption clearly and showing all calculations.",
+    "category": "reasoning"
+  },
+  {
+    "id": "reason-07",
+    "name": "Logical Fallacies",
+    "prompt": "Identify the logical fallacy in each of the following arguments. Name the fallacy, explain why it's fallacious, and provide a corrected version of the argument if possible.\n\n1. 'We should ban all AI research. After all, if we don't stop now, eventually robots will take over the world and enslave humanity.'\n2. 'Dr. Smith says vaccines are safe, but Dr. Smith once got a parking ticket, so clearly we can't trust anything she says about medicine.'\n3. 'Everyone in my office uses iPhone, therefore iPhone must be the best smartphone.'\n4. 'Either we increase the military budget by 50% or our enemies will destroy us.'\n5. 'This policy worked in Singapore, so it will definitely work in the United States.'",
+    "category": "reasoning"
+  },
+  {
+    "id": "reason-08",
+    "name": "Cryptarithmetic",
+    "prompt": "Solve the following cryptarithmetic puzzle where each letter represents a unique digit (0-9):\n\n    S E N D\n  + M O R E\n  ---------\n  M O N E Y\n\nShow your step-by-step deduction process.",
+    "expected_answer": "9567 + 1085 = 10652",
+    "category": "math"
+  },
+  {
+    "id": "reason-09",
+    "name": "Ethical Dilemma",
+    "prompt": "Analyze the following ethical dilemma from at least three different ethical frameworks (utilitarian, deontological, virtue ethics). Then provide your synthesized recommendation.\n\nScenario: An AI system at a hospital can predict with 95% accuracy which patients in the ER will deteriorate within 6 hours. However, to achieve this accuracy, it requires access to patients' complete medical history, genetic data, and social media activity. Using the system would save an estimated 50 lives per year at this hospital. Not using it maintains current mortality rates. Some patients have explicitly stated they don't want their social media analyzed. The hospital cannot get individual consent in emergency situations.",
+    "category": "reasoning"
+  },
+  {
+    "id": "reason-10",
+    "name": "Systems Thinking",
+    "prompt": "A city implements a new policy: free public transit for all residents. Using systems thinking, map out the first, second, and third-order effects across at least these domains: transportation, economics, environment, housing, social equity, and city budget. Identify at least two potential unintended consequences and two reinforcing feedback loops.",
+    "category": "reasoning"
+  }
+]

@@ -1,0 +1,121 @@
+services:
+  specter:
+    build: .
+    container_name: demo-specter
+    restart: unless-stopped
+    mem_limit: 2g
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    environment:
+      # Default points at the bundled demo-ollama service. Override
+      # OLLAMA_BASE_URL in .env to point at the host's Ollama if you
+      # don't want to run the bundled GPU-heavy service.
+      - OPENAI_BASE_URL=${OLLAMA_BASE_URL:?set OLLAMA_BASE_URL in .env to your Ollama OpenAI-compatible endpoint (e.g. http://demo-ollama:11434/v1 to use the bundled service or http://host.docker.internal:11434/v1 for the host's Ollama)}
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
+      - LLM_MODEL=${LLM_MODEL:?set LLM_MODEL in .env}
+      - REDIS_URL=${REDIS_URL:-redis://demo-redis:6379/15}
+      - VLLM_BASE_URL=${VLLM_BASE_URL:-}
+      - VLLM_COMPOSE_DIR=${VLLM_COMPOSE_DIR:-/vllm-compose}
+      # HOST path of the vLLM models cache (required only for the vLLM
+      # benchmarking flow). Specter spawns sibling vllm containers via
+      # the docker socket, so this is resolved by the host's docker
+      # daemon — must be an absolute host path.
+      - VLLM_MODELS_DIR=${VLLM_MODELS_DIR:-}
+      - HF_TOKEN=${HF_TOKEN:-}
+      # Langfuse not bundled — leave host empty to no-op observability.
+      - LANGFUSE_HOST=${LANGFUSE_HOST:-}
+      - LANGFUSE_PUBLIC_KEY=${LANGFUSE_PUBLIC_KEY:-}
+      - LANGFUSE_SECRET_KEY=${LANGFUSE_SECRET_KEY:-}
+    volumes:
+      # Docker socket: enables specter to manage an external vLLM container.
+      # Optional — leave commented if you don't need vLLM benchmarks.
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      redis:
+        condition: service_healthy
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu, utility]
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')"]
+      interval: 30s
+      timeout: 10s
+      start_period: 30s
+      retries: 3
+
+  # ── Bundled dependencies ──
+  redis:
+    image: redis:7-alpine
+    container_name: demo-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_HOST_PORT:-6379}:6379"
+    volumes:
+      - specter-redis-data:/data
+    command: redis-server --appendonly yes --databases 20
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Bundled Ollama (NVIDIA GPU passthrough). After first start, pull the
+  # models the demo expects, e.g.
+  #   docker exec demo-ollama ollama pull llama3.2:3b
+  #   docker exec demo-ollama ollama pull gpt-oss:20b
+  #
+  # Skip this entirely by gating it under the `local-models` profile
+  # below — point OLLAMA_BASE_URL at the host's Ollama instead.
+  ollama:
+    image: ollama/ollama:latest
+    container_name: demo-ollama
+    restart: unless-stopped
+    profiles: ["local-models"]
+    ports:
+      - "${OLLAMA_HOST_PORT:-11434}:11434"
+    volumes:
+      - specter-ollama-data:/root/.ollama
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - GGML_CUDA_ENABLE_UNIFIED_MEMORY=1
+      - OLLAMA_KEEP_ALIVE=1h
+      - OLLAMA_NUM_PARALLEL=2
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # Optional HTTPS reverse proxy (--profile proxy).
+  caddy:
+    image: caddy:2-alpine
+    profiles: ["proxy"]
+    container_name: specter-caddy
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PORT:-8081}:80"
+      - "${HTTPS_PORT:-8443}:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - specter-caddy-data:/data
+      - specter-caddy-config:/config
+    depends_on:
+      - specter
+
+volumes:
+  specter-redis-data:
+  specter-ollama-data:
+  specter-caddy-data:
+  specter-caddy-config:

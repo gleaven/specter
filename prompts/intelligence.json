@@ -1,0 +1,63 @@
+[
+  {
+    "id": "intel-01",
+    "name": "Entity Extraction",
+    "prompt": "Extract all named entities (people, organizations, locations, dates) from the following intelligence report and organize them into a structured table with columns: Entity, Type, Context.\n\nREPORT: On 14 March 2024, SIGINT intercepts confirmed that Colonel Viktor Petrov of the GRU's 85th Main Special Service Center coordinated with Dmitri Volkov, a known intermediary operating out of Istanbul, Turkey. Communications referenced a shipment arriving at the Port of Tartus, Syria on 22 March. The FSB's Directorate K reportedly provided logistical support through their Ankara station chief, identified only as GRANITE. NSA analysts believe the operation involves the transfer of S-400 missile system components to Hezbollah elements in the Bekaa Valley, Lebanon.",
+    "expected_entities": 12,
+    "category": "extraction"
+  },
+  {
+    "id": "intel-02",
+    "name": "Timeline Reconstruction",
+    "prompt": "Reconstruct a chronological timeline from the following fragmented intelligence reports. Include dates, events, actors, and confidence levels.\n\n1. [HUMINT 03-FEB] Asset COBALT reports unusual activity at the warehouse district in Odessa. Multiple trucks observed loading at night.\n2. [SIGINT 28-JAN] Intercepted call between FALCON and unknown party discusses 'the February delivery' and 'the southern route.'\n3. [GEOINT 05-FEB] Satellite imagery shows 3 vessels at Odessa port not matching AIS transponder data.\n4. [OSINT 01-FEB] Social media posts from Odessa dockworkers mention overtime and restricted areas.\n5. [SIGINT 07-FEB] FALCON confirms to handler: 'Package departed on schedule. ETA Constanta 48 hours.'\n6. [HUMINT 10-FEB] Romanian border police report increased activity at Constanta port. No further details.",
+    "category": "analysis"
+  },
+  {
+    "id": "intel-03",
+    "name": "Threat Assessment",
+    "prompt": "Based on the following indicators, produce a structured threat assessment with: Threat Level (CRITICAL/HIGH/MEDIUM/LOW), Key Indicators, Assessment Summary, Recommended Actions, and Intelligence Gaps.\n\nIndicators:\n- Increased encrypted communications between known arms traffickers in the Sahel region\n- Two SIGINT intercepts reference 'the big event' in the next 30 days\n- HUMINT source reports unusual purchases of ammonium nitrate in Bamako, Mali\n- Social media analysis shows recruitment messaging surge in northern Mali\n- Satellite imagery reveals new vehicle tracks to abandoned mining sites\n- French DGSE shared report of missing military-grade detonators from a Libyan depot",
+    "category": "analysis"
+  },
+  {
+    "id": "intel-04",
+    "name": "Network Analysis",
+    "prompt": "Analyze the following communication intercepts and identify the organizational hierarchy, key nodes, and potential vulnerabilities in the network.\n\nIntercepts:\n- ALPHA calls BRAVO daily at 0800 and 2000. ALPHA gives instructions; BRAVO acknowledges.\n- BRAVO calls CHARLIE, DELTA, and ECHO after each ALPHA call. Passes operational details.\n- CHARLIE and DELTA never communicate directly with each other.\n- ECHO communicates with FOXTROT independently, discussing financial matters.\n- GOLF only receives calls from ALPHA, approximately weekly. Conversations are brief and use heavy code words.\n- HOTEL communicates with both CHARLIE and DELTA, coordinating logistics.\n- ECHO was observed meeting ALPHA in person at a cafe in Beirut on three occasions.",
+    "category": "analysis"
+  },
+  {
+    "id": "intel-05",
+    "name": "Code Word Decryption",
+    "prompt": "The following intercepted messages use code words. Based on context clues, decode the probable meaning of each code word and explain your reasoning.\n\n1. 'The CARPENTER will deliver the FURNITURE to the WAREHOUSE by Thursday. Make sure the LANDLORD doesn't inspect before Friday.'\n2. 'GRANDFATHER is sick again. The DOCTOR says he needs MEDICINE from the PHARMACY in the south. Send the AMBULANCE.'\n3. 'The WEDDING is confirmed for next week. We need 200 GUESTS and the CATERER from across the border. The BRIDE's family is providing DECORATIONS.'",
+    "category": "analysis"
+  },
+  {
+    "id": "intel-06",
+    "name": "SITREP Generation",
+    "prompt": "Generate a military-format SITREP (Situation Report) based on the following field observations. Use standard military format with: DTG, Unit, Location, Situation, Enemy Activity, Friendly Activity, Logistics, Communications, and Commander's Assessment.\n\nObservations: Alpha Company, 2nd Battalion is positioned at Grid Reference 38S MD 4521 7832 near Kandahar Province. At 0345Z, OP-3 reported 8-10 military-age males moving south along Route COPPER carrying what appeared to be RPGs and small arms. IED strike on Route BRONZE at 0612Z disabled one MRAP from Bravo Company, 2 WIA (non-life-threatening). UAV feed shows a compound 2km east with unusual vehicle activity. Supply convoy delayed 6 hours due to bridge damage on MSR GOLD. Comms with Battalion TOC intermittent due to atmospheric conditions.",
+    "category": "generation"
+  },
+  {
+    "id": "intel-07",
+    "name": "Pattern of Life Analysis",
+    "prompt": "Analyze the following surveillance data and identify patterns of life, anomalies, and potential indicators of hostile activity.\n\nSubject: Male, approximately 35-40, designated TARGET CRIMSON\nDay 1: Departs residence 0730, drives to office building downtown, leaves 1700, stops at grocery store, returns home 1830.\nDay 2: Departs 0730, office, leaves 1700, returns home directly 1745.\nDay 3: Departs 0730, office, leaves 1200 (unusual), meets unknown male at park for 20 minutes, returns to office 1300, leaves 1700.\nDay 4: Departs 0730, office, leaves 1700, drives to industrial district (not part of normal routine), enters warehouse for 45 minutes, returns home 1930.\nDay 5: Does not go to work (weekday). Departs 1000, drives to airport, meets two males arriving on international flight, all three go to the warehouse from Day 4.\nDay 6: Normal pattern resumes. Office 0730-1700.\nDay 7: Weekend. Subject does not leave residence.",
+    "category": "analysis"
+  },
+  {
+    "id": "intel-08",
+    "name": "Source Reliability Assessment",
+    "prompt": "Evaluate the reliability and credibility of the following intelligence sources using the NATO Admiralty System (A-F for reliability, 1-6 for credibility). Provide your rating and justification for each.\n\n1. A HUMINT source who has provided accurate information on 3 of 4 previous occasions, reporting on troop movements in a region they have direct access to.\n2. An OSINT social media account that posted a video showing military vehicles, but the account was created 2 weeks ago and has no posting history.\n3. A SIGINT intercept of a phone call between two known operatives discussing a specific date and location for a meeting.\n4. A diplomatic source who heard second-hand at a reception that a neighboring country is planning military exercises near the border.\n5. Satellite imagery showing construction activity at a known military facility, consistent with what was reported by Source 1.",
+    "category": "analysis"
+  },
+  {
+    "id": "intel-09",
+    "name": "Intelligence Summary",
+    "prompt": "Write an executive intelligence summary (INTSUM) suitable for a flag officer briefing. Maximum 300 words. Synthesize the following raw intelligence into a coherent assessment.\n\nInputs:\n- SIGINT: Increased communications between Iranian IRGC-QF and Houthi commanders over past 72 hours\n- GEOINT: Two Iranian cargo vessels diverted from normal shipping lanes, now heading toward Yemeni port of Hodeidah\n- HUMINT: Source reports Houthi forces conducting anti-ship missile launcher maintenance at three coastal sites\n- OSINT: Houthi media channels publishing rhetoric about 'expanding maritime operations' and 'new capabilities'\n- CYBERINT: Scanning activity detected against AIS transponder networks in the Red Sea region\n- DIPLOMATIC: UAE ambassador privately expressed concern about 'imminent escalation' to US counterpart",
+    "category": "generation"
+  },
+  {
+    "id": "intel-10",
+    "name": "Counterintelligence Analysis",
+    "prompt": "Assess the following scenario for potential counterintelligence concerns. Identify indicators, assess the threat, and recommend countermeasures.\n\nScenario: A junior analyst at a defense contractor has been exhibiting the following behaviors over the past 6 months:\n- Working late hours alone in the SCIF, including weekends (not required by workload)\n- Recently paid off $45,000 in credit card debt despite no change in salary\n- Made three trips to a country of concern for 'tourism' in the past year\n- Downloaded 2,300 classified documents to a portable drive (within authorization but unusual volume)\n- Social media shows new expensive lifestyle: luxury watch, new car\n- Coworkers report subject has been asking questions about programs outside their need-to-know\n- Subject's supervisor rates their work performance as 'exceeds expectations'",
+    "category": "analysis"
+  }
+]

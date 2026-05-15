@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="./">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <title>SPECTER // Edge Inference Workbench</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/specter.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="cyber-bg">
+        <div class="grid-overlay"></div>
+        <div class="scan-line"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="top-bar">
+        <div class="brand">
+            <div class="status-dot" id="status-dot"></div>
+            <span class="logo-text" data-text="SPECTER">SPECTER</span>
+            <span class="status-badge" id="status-badge">STANDBY</span>
+        </div>
+        <div class="gpu-info">
+            <div class="gpu-status">
+                <span>GPU</span>
+                <span class="gpu-ok" id="gpu-util">&mdash;%</span>
+                <span>|</span>
+                <span>MEM</span>
+                <span class="gpu-ok" id="gpu-mem">&mdash;</span>
+                <span>|</span>
+                <span>PWR</span>
+                <span class="gpu-ok" id="gpu-power">&mdash;W</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content">
+        <div class="workbench">
+            <!-- Left Panel: Controls -->
+            <aside class="control-panel">
+                <!-- Configuration (always visible) -->
+                <div class="panel-section">
+                    <h3 class="section-title">Configuration</h3>
+                    <div class="config-row">
+                        <label class="config-label">Backend</label>
+                        <select id="benchmark-backend" class="config-select">
+                            <option value="ollama" selected>Ollama (Direct)</option>
+                            <option value="litellm">LiteLLM (Proxy)</option>
+                            <option value="vllm">vLLM (Direct)</option>
+                        </select>
+                    </div>
+                    <div class="config-row" style="margin-top:0.5rem;">
+                        <label class="config-label">Runs per prompt</label>
+                        <select id="runs-per-prompt" class="config-select">
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tab bar -->
+                <div class="panel-tabs">
+                    <button class="panel-tab active" data-tab="tab-benchmark">Benchmark</button>
+                    <button class="panel-tab" data-tab="tab-prompts">Prompts</button>
+                </div>
+
+                <!-- Benchmark tab -->
+                <div class="tab-content active" id="tab-benchmark">
+                    <div class="panel-section">
+                        <h3 class="section-title">Models</h3>
+                        <div id="model-list" class="model-list">
+                            <div class="loading-text">Loading models...</div>
+                        </div>
+                        <div style="display:flex;gap:0.35rem;">
+                            <button class="btn btn-secondary btn-sm" id="btn-refresh-models" style="flex:1;">Refresh</button>
+                            <button class="btn btn-secondary btn-sm" id="btn-load-models" style="flex:1;color:var(--accent-success);border-color:rgba(57,255,20,0.3);" disabled>Load</button>
+                            <button class="btn btn-secondary btn-sm" id="btn-unload-models" style="flex:1;color:var(--accent-danger);border-color:rgba(255,51,102,0.3);" disabled>Unload</button>
+                        </div>
+                    </div>
+
+                    <div class="panel-section">
+                        <h3 class="section-title">Prompt Sets</h3>
+                        <div id="prompt-set-list" class="prompt-set-list">
+                            <div class="loading-text">Loading...</div>
+                        </div>
+                    </div>
+
+                    <div class="panel-section actions">
+                        <button class="btn btn-primary" id="btn-run" disabled>RUN BENCHMARK</button>
+                        <button class="btn btn-danger" id="btn-stop" disabled>STOP</button>
+                    </div>
+                </div>
+
+                <!-- Prompts tab -->
+                <div class="tab-content" id="tab-prompts">
+                    <div class="panel-section">
+                        <h3 class="section-title">Prompt Set</h3>
+                        <select id="prompt-set-selector" class="config-select" style="width:100%;margin-bottom:0.75rem;">
+                            <option value="">Select a set...</option>
+                        </select>
+                        <div id="prompt-list" class="prompt-list"></div>
+                        <button class="btn btn-secondary btn-sm" id="btn-add-prompt" style="margin-top:0.5rem;" disabled>+ Add Prompt</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Right Panel: Metrics + Leaderboard -->
+            <section class="metrics-panel">
+                <!-- Progress bar -->
+                <div class="progress-section" id="progress-section" style="display: none;">
+                    <div class="progress-header">
+                        <span class="progress-label" id="progress-label">Benchmarking...</span>
+                        <span class="progress-count" id="progress-count">0 / 0</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="progress-detail" id="progress-detail"></div>
+                </div>
+
+                <!-- Charts -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <span class="chart-title">Tokens / sec</span>
+                            <span class="chart-value" id="tps-value">&mdash;</span>
+                        </div>
+                        <canvas id="chart-tps" class="chart-canvas"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <span class="chart-title">GPU Memory</span>
+                            <span class="chart-value" id="mem-value">&mdash;</span>
+                        </div>
+                        <canvas id="chart-mem" class="chart-canvas"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <span class="chart-title">Time to First Token</span>
+                            <span class="chart-value" id="ttft-value">&mdash;</span>
+                        </div>
+                        <canvas id="chart-ttft" class="chart-canvas"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <span class="chart-title">GPU Utilization</span>
+                            <span class="chart-value" id="util-value">&mdash;</span>
+                        </div>
+                        <canvas id="chart-util" class="chart-canvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Leaderboard -->
+                <div class="leaderboard-section">
+                    <h3 class="section-title">Leaderboard <span class="section-hint">(click row for report)</span></h3>
+                    <div class="table-wrap">
+                        <table class="leaderboard-table" id="leaderboard-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Model</th>
+                                    <th>Arch</th>
+                                    <th>Engine</th>
+                                    <th>tok/s</th>
+                                    <th>TTFT</th>
+                                    <th>Accuracy</th>
+                                    <th>Prompts</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboard-body">
+                                <tr><td colspan="9" class="empty-row">No benchmark results yet</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Run Results -->
+                <div class="results-section" id="results-section" style="display: none;">
+                    <h3 class="section-title">Run Results</h3>
+                    <div class="table-wrap">
+                        <table class="results-table">
+                            <thead>
+                                <tr>
+                                    <th>Model</th>
+                                    <th>Prompt</th>
+                                    <th>tok/s</th>
+                                    <th>TTFT</th>
+                                    <th>Tokens</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="results-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- ═══ Report Modal ═══ -->
+    <div class="report-overlay" id="report-overlay">
+        <div class="report-modal">
+            <div class="report-header">
+                <div>
+                    <h2 class="report-title" id="report-title">MODEL REPORT</h2>
+                    <span class="report-subtitle" id="report-subtitle"></span>
+                </div>
+                <button class="report-close" id="report-close">&times;</button>
+            </div>
+            <div class="report-body" id="report-body">
+                <!-- Summary cards -->
+                <div class="report-cards" id="report-cards"></div>
+
+                <!-- Technical Overview -->
+                <div class="report-section">
+                    <h3 class="section-title">Technical Overview</h3>
+                    <div class="report-overview" id="report-overview"></div>
+                </div>
+
+                <!-- Charts row -->
+                <div class="report-charts">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <span class="chart-title">Category Performance (tok/s)</span>
+                        </div>
+                        <canvas id="report-chart-category" class="chart-canvas" style="height:180px;"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <span class="chart-title">Leaderboard Comparison</span>
+                        </div>
+                        <canvas id="report-chart-compare" class="chart-canvas" style="height:180px;"></canvas>
+                    </div>
+                </div>
+
+                <!-- Detailed results -->
+                <div class="report-section">
+                    <h3 class="section-title">Detailed Results <span class="section-hint">(click arrow to see question & full answer)</span></h3>
+                    <div class="table-wrap">
+                        <table class="results-table">
+                            <thead>
+                                <tr>
+                                    <th>Prompt</th>
+                                    <th>Category</th>
+                                    <th>tok/s</th>
+                                    <th>TTFT</th>
+                                    <th>Score</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="report-results-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ Prompt Editor Modal ═══ -->
+    <div class="report-overlay" id="prompt-editor-overlay">
+        <div class="report-modal prompt-editor-modal">
+            <div class="report-header">
+                <h2 class="report-title" id="prompt-editor-title">Edit Prompt</h2>
+                <button class="report-close" id="prompt-editor-close">&times;</button>
+            </div>
+            <div class="report-body">
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-input" id="pe-name" placeholder="Prompt name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <input type="text" class="form-input" id="pe-category" placeholder="e.g. reasoning, coding, analysis">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Prompt</label>
+                    <textarea class="form-textarea" id="pe-prompt" rows="8" placeholder="The prompt text..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label">Expected Answer <span class="form-hint">(optional)</span></label>
+                        <input type="text" class="form-input" id="pe-expected-answer" placeholder="Substring match">
+                    </div>
+                    <div class="form-group" style="flex:0 0 140px;">
+                        <label class="form-label">Expected Entities <span class="form-hint">(opt)</span></label>
+                        <input type="number" class="form-input" id="pe-expected-entities" placeholder="0">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-danger btn-sm" id="pe-delete" style="margin-right:auto;">Delete</button>
+                    <button class="btn btn-secondary btn-sm" id="pe-cancel">Cancel</button>
+                    <button class="btn btn-primary btn-sm" id="pe-save">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/charts.js"></script>
+    <script src="js/app.js"></script>
+    <script src="/shared/demo-guide.js" data-demo-id="specter"></script>
+</body>
+</html>

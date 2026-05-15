@@ -1,0 +1,62 @@
+[
+  {
+    "id": "tac-01",
+    "name": "Course of Action",
+    "prompt": "Develop three courses of action (COA) for the following tactical scenario. For each COA, provide: Scheme of Maneuver, Key Assumptions, Risks, Resource Requirements, and Expected Outcome.\n\nScenario: A mechanized infantry battalion must secure a bridge crossing over a 50-meter wide river. Enemy forces (estimated reinforced company) hold the far bank with prepared defensive positions. Friendly forces have 3 rifle companies, 1 weapons company, limited air support (2x AH-64), and engineer assets (1 bridge-building platoon). The bridge is partially damaged but possibly repairable. There is a ford 3km north but it's only passable for dismounted troops.",
+    "category": "generation"
+  },
+  {
+    "id": "tac-02",
+    "name": "OPORD Draft",
+    "prompt": "Draft the key elements of an Operations Order (OPORD) for the following mission. Include: Situation (enemy, friendly, attachments/detachments), Mission Statement (who, what, when, where, why), Execution (concept of operations, tasks to subordinate units), Service Support (logistics), and Command and Signal.\n\nMission: Company-level raid on an enemy weapons cache located in a compound at Grid 42S XD 1234 5678. Intelligence indicates 10-15 enemy combatants guarding the site. The cache contains anti-tank missiles and IED-making materials. Raid must be conducted between 0200-0400 local time to maximize surprise. Extraction via helicopter at LZ EAGLE, 800m southwest of the objective.",
+    "category": "generation"
+  },
+  {
+    "id": "tac-03",
+    "name": "Rules of Engagement",
+    "prompt": "A patrol encounters the following situation. Analyze it against standard Rules of Engagement and advise the patrol leader on the appropriate response.\n\nSituation: During a mounted patrol in a semi-permissive environment, the lead vehicle observes a civilian truck blocking the road 200m ahead. Two military-age males are standing near the truck. One appears to be talking on a cell phone. The patrol has received intelligence that VBIED attacks have increased in this sector. The truck matches the general description (white Toyota Hilux) from a recent threat warning. However, white Hilux trucks are extremely common in the area. There are civilians (including children) visible in the nearby market area. The patrol has been ordered to reach a checkpoint 5km ahead within 30 minutes.",
+    "category": "analysis"
+  },
+  {
+    "id": "tac-04",
+    "name": "Battle Damage Assessment",
+    "prompt": "Produce a Battle Damage Assessment (BDA) report based on the following post-strike information. Include physical damage assessment, functional damage assessment, and target system assessment.\n\nStrike Details: 2x GBU-38 JDAM on enemy command and control facility at 0342Z.\nPost-Strike Observations:\n- Primary building: roof collapsed, 60% structural damage visible\n- Adjacent communications tower: still standing but antenna array destroyed\n- Vehicle park: 3 of 5 vehicles destroyed, 2 appear damaged but potentially operational\n- Secondary building (believed barracks): minor blast damage, structurally intact\n- Personnel observed evacuating to treeline 200m north, estimated 15-20 individuals\n- No secondary explosions observed\n- Communications intercepts show attempts to establish backup comms via satellite phone",
+    "category": "analysis"
+  },
+  {
+    "id": "tac-05",
+    "name": "Convoy Planning",
+    "prompt": "Plan a logistics convoy operation given the following parameters. Provide: Route selection rationale, movement timeline, security posture, contingency plans, and communication plan.\n\nParameters:\n- 12 vehicles: 4x MRAP, 6x logistics trucks (fuel and ammo), 2x recovery vehicles\n- Distance: 180km on mixed terrain (60km paved highway, 80km improved gravel, 40km unimproved trail)\n- Threat level: MEDIUM (IED threat on highway segment, small arms ambush possible in mountain pass)\n- Available support: 1x UAV for 4 hours, QRF at FOB EAGLE (45 min response time)\n- Time constraint: Must arrive before dark (sunset at 1830 local, current time 0600)\n- Known chokepoints: Bridge at km 45 (single lane), mountain pass at km 110-130",
+    "category": "generation"
+  },
+  {
+    "id": "tac-06",
+    "name": "Fire Support Plan",
+    "prompt": "Develop a fire support plan for a company-level assault. Include target priorities, fire support coordination measures, trigger points, and deconfliction.\n\nScenario: Alpha Company is assaulting Objective WOLF (fortified hilltop position, 3 bunkers, 1 mortar pit). Available fire support:\n- 1 platoon 81mm mortars (36 rounds HE, 12 rounds smoke)\n- Battery of 155mm howitzers (priority of fires for 2 hours)\n- 2x AH-64 Apache (on station for 45 minutes, 16x Hellfire, 300 rds 30mm)\n- Company organic weapons: 4x Javelin, 2x 60mm mortars\nFriendly positions: Bravo Company on adjacent hill 800m east. OP on ridgeline 400m south of objective.",
+    "category": "generation"
+  },
+  {
+    "id": "tac-07",
+    "name": "MEDEVAC Request",
+    "prompt": "Format a proper 9-Line MEDEVAC request based on the following situation, then describe the correct procedures for the ground team.\n\nSituation: Two casualties from an IED strike at Grid 42S XB 8834 2267. First casualty: GSW to left leg, tourniquet applied, conscious and alert, US military. Second casualty: blast injuries to torso and arms, unconscious, breathing, Afghan interpreter (local national). The area was under sporadic small arms fire 10 minutes ago but is currently quiet. The team has marked an HLZ 50 meters west with VS-17 panel. It's 1430 local time, terrain is flat desert. No NBC contamination.",
+    "category": "generation"
+  },
+  {
+    "id": "tac-08",
+    "name": "Defensive Position",
+    "prompt": "Design a platoon-level defensive position for the following terrain and threat. Include sector sketches description, obstacle plan, engagement area, and withdrawal plan.\n\nTerrain: Low ridgeline (elevation advantage 30m) overlooking a 500m wide valley with a paved road running through it. Dense vegetation on the reverse slope. Small village (10 buildings) 400m to the northeast. Dry riverbed 200m in front of position.\n\nThreat: Enemy mechanized company (10x BTR-80, ~100 infantry) expected to advance from the south along the road within 24-48 hours.\n\nFriendly: Infantry platoon (3 squads, 36 personnel), 2x Javelin, 4x M240B, 2x M249, limited engineer materials (20x anti-tank mines, 500m concertina wire, sandbags).",
+    "category": "generation"
+  },
+  {
+    "id": "tac-09",
+    "name": "Patrol Debrief",
+    "prompt": "Conduct a patrol debrief based on the following patrol report. Identify lessons learned, intelligence value, and recommendations for future operations.\n\nPatrol Report: 8-man recon patrol, departed FOB at 2200, returned 0430. Route: MSR TAMPA to checkpoint ALPHA, then cross-country to NAI 7. Observations: 3 new roadside markers (possible IED indicators) on MSR TAMPA between km 12-14. Unusual foot traffic near NAI 7 at 0100 (5-6 individuals with flashlights, appeared to be digging). Patrol was detected at 0200 by a dog near the village, had to alter route. Found fresh vehicle tracks on a previously unused trail heading toward the border. One team member suffered a minor ankle injury on rough terrain. Radio communications were degraded in the valley at km 16-18. Night vision effectiveness reduced by 40% due to overcast conditions.",
+    "category": "analysis"
+  },
+  {
+    "id": "tac-10",
+    "name": "Civil-Military Operations",
+    "prompt": "Develop a civil-military engagement plan for the following situation. Include key leader engagement strategy, humanitarian assistance priorities, information operations themes, and risk mitigation.\n\nSituation: A US Army company has been tasked with establishing presence in a district center (population ~5,000) that has been under Taliban influence for the past 2 years. The local malik (village elder) is cautiously receptive. The district has no functioning clinic, the school was destroyed, and the irrigation canal system is damaged. Local farmers are facing crop failure without irrigation. Two tribal factions are in a land dispute. The Taliban have been providing basic dispute resolution and some humanitarian aid. A key Taliban sub-commander is from this district and has family connections throughout the population.",
+    "category": "generation"
+  }
+]
