@@ -576,3 +576,31 @@ for the health probe.
 ## Credits
 
 Built by Andrew Meinecke.
+
+## Components & Licensing
+
+This demo is released under Apache License 2.0. It wraps the following
+third-party components, each retaining its own license:
+
+| Component | License | Use in this demo |
+|---|---|---|
+| [FastAPI](https://github.com/fastapi/fastapi) | MIT | HTTP + WebSocket server |
+| [Uvicorn](https://github.com/encode/uvicorn) | BSD-3 | ASGI server |
+| [httpx](https://github.com/encode/httpx) | BSD-3 | Outbound LLM client (streaming) |
+| [Langfuse SDK](https://github.com/langfuse/langfuse-python) | MIT | Optional benchmark-run / LLM-call observability (no-ops if `LANGFUSE_HOST` is empty) |
+| [Redis](https://github.com/redis/redis) (bundled `redis:7-alpine`) | RSALv2 / SSPLv1 (dual) | Benchmark-run history |
+| [Caddy](https://github.com/caddyserver/caddy) (optional `--profile proxy`) | Apache 2.0 | HTTPS termination |
+| [Docker CLI](https://github.com/moby/moby) (bundled in the image) | Apache 2.0 | Spawns sibling vLLM benchmark containers via the host socket |
+| [Ollama](https://github.com/ollama/ollama) (typical OpenAI-compatible target) | MIT | Local LLM inference (one side of the benchmark) |
+| [vLLM](https://github.com/vllm-project/vllm) (optional, launched as sibling container) | Apache 2.0 | High-throughput inference (other side of the benchmark) |
+
+The four bundled prompt sets (`prompts/intelligence.json`,
+`prompts/tactical.json`, `prompts/coding.json`, `prompts/reasoning.json`)
+are authored for this demo.
+
+### License notes
+
+Model weights you point SPECTER at carry their own license — accept
+them on first use (this includes any HF-gated models you load into
+vLLM via `HF_TOKEN`). Redis 7.4+ uses the dual RSALv2 / SSPLv1
+license; the RSALv2 path covers normal use.
